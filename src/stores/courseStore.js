@@ -40,6 +40,8 @@ Dispatcher.register(action => {
             courses.push(action.course);
             STORE.emitChange();
             break;
+        default:
+            // do nothing
     }
 });
 
