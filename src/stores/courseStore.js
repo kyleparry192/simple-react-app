@@ -32,20 +32,22 @@ const store = new CourseStore();
 
 Dispatcher.register(action => {
     switch (action.actionType) {
-        case actionTypes.LOAD_COURSES:
-            courses = action.courses;
-            store.emitChange();
-            break;
         case actionTypes.CREATE_COURSE:
             courses.push(action.course);
+            store.emitChange();
+            break;
+        case actionTypes.LOAD_COURSES:
+            courses = action.courses;
             store.emitChange();
             break;
         case actionTypes.UPDATE_COURSE:
             courses = courses.map(course => course.id === action.course.id ? action.course : course);
             store.emitChange();
             break;
-        default:
-        // do nothing
+        case actionTypes.DELETE_COURSE:
+            courses = courses.filter(course => course.id !== parseInt(action.id, 10));
+            store.emitChange();
+            break;
     }
 });
 

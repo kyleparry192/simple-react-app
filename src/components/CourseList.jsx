@@ -16,9 +16,15 @@ function CourseList(props) {
             {props.courses.map(course => {
                 return (
                     <tr key={course.id}>
-                        <td><Link to={"/course/" + course.slug}>{course.title}</Link></td>
+                        <td>{course.title}</td>
                         <td>{course.authorId}</td>
                         <td>{course.category}</td>
+                        <td>
+                            <Link className="btn btn-warning" to={"/course/" + course.slug}>Update</Link>
+                            <button className="btn btn-outline-danger" onClick={() => props.deleteCourse(course.id)}>
+                                Delete
+                            </button>
+                        </td>
                     </tr>
                 )
             })}
