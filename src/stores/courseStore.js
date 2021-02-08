@@ -23,26 +23,30 @@ class CourseStore extends EventEmitter {
         return courses;
     }
 
-    getCourseById(id) {
-        return courses.find(course => course.id === id);
+    getCourseBySlug(slug) {
+        return courses.find(course => course.slug === slug);
     }
 }
 
-const STORE = new CourseStore();
+const store = new CourseStore();
 
 Dispatcher.register(action => {
     switch (action.actionType) {
         case actionTypes.LOAD_COURSES:
             courses = action.courses;
-            STORE.emitChange();
+            store.emitChange();
             break;
         case actionTypes.CREATE_COURSE:
             courses.push(action.course);
-            STORE.emitChange();
+            store.emitChange();
+            break;
+        case actionTypes.UPDATE_COURSE:
+            courses = courses.map(course => course.id === action.course.id ? action.course : course);
+            store.emitChange();
             break;
         default:
-            // do nothing
+        // do nothing
     }
 });
 
-export default STORE;
+export default store;
